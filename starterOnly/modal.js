@@ -32,6 +32,14 @@ const quantityMessage = "Vous devez choisir une option."
 const radioCitiesMessage = "Vous devez choisir une option."
 const conditionCheckMessage = "Vous devez vérifier que vous acceptez les termes et conditions."
 
+//FormData Divs for error style
+const firstNameDiv = document.querySelector(".first")
+const lastNameDiv = document.querySelector(".last")
+const emailDiv = document.querySelector(".email")
+const birthdateDiv = document.querySelector(".birthdate")
+const quantityDiv = document.querySelector(".quantity")
+const radioCitiesDiv = document.querySelector(".location")
+const conditionDiv = document.querySelector(".conditions")
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -45,8 +53,6 @@ function launchModal() {
 closeBtn.addEventListener("click", () => {
   modalbg.style.display = "none";
 });
-/* Verifier si besoin de fonction plus complexe, comme pour "launch modal event" plus haut*/
-
 
 //Form Check
 
@@ -56,79 +62,61 @@ function checkName(name) {
   return regex.test(name);
 };
 
-//Prénom (reservForm enlevé pour test)
-firstName.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  if (!checkName(firstName.value)) {
-    formData.setAttribute("data-error", firstNameMessage);
-    formData.setAttribute("data-error-visible", true);
-  } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
-});
-
-//Nom (reservForm enlevé pour test)
-lastName.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  if (!checkName(lastName.value)) {
-    formData.setAttribute("data-error", lastNameMessage);
-    formData.setAttribute("data-error-visible", true);
-  } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
-});
-
 //E-mail --/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/--
 function checkMail(name) {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
   return regex.test(name);
 };
-//(reservForm enlevé pour test)
-email.addEventListener("submit", function (event) {
+
+reserveForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
+//Prénom 
+  if (!checkName(firstName.value)) {
+    firstNameDiv.setAttribute("data-error", firstNameMessage);
+    firstNameDiv.setAttribute("data-error-visible", true);
+  } else {
+    firstNameDiv.removeAttribute("data-error");
+    firstNameDiv.removeAttribute("data-error-visible");
+  };
+
+//Nom
+  if (!checkName(lastName.value)) {
+    lastNameDiv.setAttribute("data-error", lastNameMessage);
+    lastNameDiv.setAttribute("data-error-visible", true);
+  } else {
+    lastNameDiv.removeAttribute("data-error");
+    lastNameDiv.removeAttribute("data-error-visible");
+  };
+
+//E-mail
   if (!checkMail(email.value)) {
-    formData.setAttribute("data-error", emailMessage);
-    formData.setAttribute("data-error-visible", true);
+    emailDiv.setAttribute("data-error", emailMessage);
+    emailDiv.setAttribute("data-error-visible", true);
   } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
-});
+    emailDiv.removeAttribute("data-error");
+    emailDiv.removeAttribute("data-error-visible");
+  };
 
-//Birthdate (reservForm enlevé pour test)
-birthdate.addEventListener("submit", function (event) {
-  event.preventDefault();
-  
+//Birthdate
   if (birthdate.value === "") {
-    formData.setAttribute("data-error", birthdateMessage);
-    formData.setAttribute("data-error-visible", true);
+    birthdateDiv.setAttribute("data-error", birthdateMessage);
+    birthdateDiv.setAttribute("data-error-visible", true);
   } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
-});
+    birthdateDiv.removeAttribute("data-error");
+    birthdateDiv.removeAttribute("data-error-visible");
+  };
 
-//Quantity (reservForm enlevé pour test)
-quantity.addEventListener("submit", function (event) {
-  event.preventDefault();
-  
+//Quantity 
   if (quantity.value === "") {
-    formData.setAttribute("data-error", quantityMessage);
-    formData.setAttribute("data-error-visible", true);
+    quantityDiv.setAttribute("data-error", quantityMessage);
+    quantityDiv.setAttribute("data-error-visible", true);
   } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
-});
+    quantityDiv.removeAttribute("data-error");
+    quantityDiv.removeAttribute("data-error-visible");
+  };
 
-//Cities Radio (reservForm enlevé pour test))
-radioCities.addEventListener("submit", function (event) {
-  event.preventDefault();
+//Cities Radio 
   var radios = document.getElementsByName("location")
   var isChecked = false;
   for (var i = 0; i < radios.length; i++) {
@@ -137,63 +125,21 @@ radioCities.addEventListener("submit", function (event) {
         break;
     }
   if (!isChecked) {
-    formData.setAttribute("data-error", radioCitiesMessage);
-    formData.setAttribute("data-error-visible", true);
+    radioCitiesDiv.setAttribute("data-error", radioCitiesMessage);
+    radioCitiesDiv.setAttribute("data-error-visible", true);
   } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
+    radioCitiesDiv.removeAttribute("data-error");
+    radioCitiesDiv.removeAttribute("data-error-visible");
   }
-}
-});
+};
 
 //Conditions Check
-
-conditionCheck.addEventListener("submit", function (event) {
-  event.preventDefault();
   var firstCheckbox = document.querySelector('input[name="checkbox1]');
-  
   if (!firstCheckbox.checked) {
-    formData.setAttribute("data-error", conditionCheckMessage);
-    formData.setAttribute("data-error-visible", true);
+    conditionDiv.setAttribute("data-error", conditionCheckMessage);
+    conditionDiv.setAttribute("data-error-visible", true);
   } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
+    conditionDiv.removeAttribute("data-error");
+    conditionDiv.removeAttribute("data-error-visible");
+  };
 });
-
-/* Notes
-
-Si je dois utiliser les element de radio :
-radioElements.forEach(radio => {
-
-});
-
-
-const form = document.querySelector("#form");
-const submitButton = document.querySelector("#submit-btn");
-
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  let formData = document.querySelector(".formData");
-  let nameInput = document.querySelector("#name");
-  let nameValue = nameInput.value;
-
-  console.log(nameValue);
-  console.log(checkName(nameValue));
-
-  if (!checkName(nameValue)) {
-    formData.setAttribute("data-error", "Le nom est pas bon");
-    formData.setAttribute("data-error-visible", true);
-  } else {
-    formData.removeAttribute("data-error");
-    formData.removeAttribute("data-error-visible");
-  }
-});
-
-function checkName(name) {
-  const regex = /^[a-zA-Z]{2,}$/;
-  return regex.test(name);
-}
-
-
-*/
