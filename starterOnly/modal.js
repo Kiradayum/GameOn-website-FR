@@ -22,6 +22,7 @@ const radioCities = document.querySelectorAll(".checkbox-input");//A quel tourno
 const conditionCheck = document.getElementById("checkbox1")//Conditions d'utilisation
 const newsletterCheck = document.getElementById("checkbox2")//Newsletter
 const reserveForm = document.getElementById("reserve-form")//Formulaire Complet
+const modalSuccess = document.getElementById("closemodal")// ---A integrer au html---
 
 //Messages
 const firstNameMessage = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
@@ -41,6 +42,16 @@ const quantityDiv = document.querySelector(".quantity")
 const radioCitiesDiv = document.querySelector(".location")
 const conditionDiv = document.querySelector(".conditions")
 
+//Validation state
+firstName.valid = false
+lastName.valid = false
+email.valid = false
+birthdate.valid = false
+quantity.valid = false
+radioCities.valid = false
+conditionCheck.valid = false
+newsletterCheck.valid = false
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -50,9 +61,12 @@ function launchModal() {
 };
 
 // close modal event
-closeBtn.addEventListener("click", () => {
+closeBtn.addEventListener("click", closeModal);
+
+// close modal form
+function closeModal() {
   modalbg.style.display = "none";
-});
+};
 
 //Form Check
 
@@ -75,71 +89,118 @@ reserveForm.addEventListener("submit", function (event) {
   if (!checkName(firstName.value)) {
     firstNameDiv.setAttribute("data-error", firstNameMessage);
     firstNameDiv.setAttribute("data-error-visible", true);
+    firstName.valid = false
   } else {
     firstNameDiv.removeAttribute("data-error");
     firstNameDiv.removeAttribute("data-error-visible");
+    firstName.valid = true
+    console.log(firstName.value)
   };
 
 //Nom
   if (!checkName(lastName.value)) {
     lastNameDiv.setAttribute("data-error", lastNameMessage);
     lastNameDiv.setAttribute("data-error-visible", true);
+    lastName.valid = false
   } else {
     lastNameDiv.removeAttribute("data-error");
     lastNameDiv.removeAttribute("data-error-visible");
+    lastName.valid = true
+    console.log(lastName.value)
   };
 
 //E-mail
   if (!checkMail(email.value)) {
     emailDiv.setAttribute("data-error", emailMessage);
     emailDiv.setAttribute("data-error-visible", true);
+    email.valid = false
   } else {
     emailDiv.removeAttribute("data-error");
     emailDiv.removeAttribute("data-error-visible");
+    email.valid = true
+    console.log(email.value)
   };
 
 //Birthdate
   if (birthdate.value === "") {
     birthdateDiv.setAttribute("data-error", birthdateMessage);
     birthdateDiv.setAttribute("data-error-visible", true);
+    birthdate.valid = false
   } else {
     birthdateDiv.removeAttribute("data-error");
     birthdateDiv.removeAttribute("data-error-visible");
+    birthdate.valid = true
+    console.log(birthdate.value)
   };
 
 //Quantity 
   if (quantity.value === "") {
     quantityDiv.setAttribute("data-error", quantityMessage);
     quantityDiv.setAttribute("data-error-visible", true);
+    quantity.valid = false
   } else {
     quantityDiv.removeAttribute("data-error");
     quantityDiv.removeAttribute("data-error-visible");
+    quantity.valid = true
+    console.log(quantity.value)
   };
 
 //Cities Radio 
-  var radios = document.getElementsByName("location")
   var isChecked = false;
-  for (var i = 0; i < radios.length; i++) {
-    if (radios[i].checked) {
+  for (var i = 0; i < radioCities.length; i++) {
+    if (radioCities[i].checked) {
         isChecked = true;
-        break;
+        break; // A revoir !
     }
   if (!isChecked) {
     radioCitiesDiv.setAttribute("data-error", radioCitiesMessage);
     radioCitiesDiv.setAttribute("data-error-visible", true);
+    radioCities.valid = false
   } else {
     radioCitiesDiv.removeAttribute("data-error");
     radioCitiesDiv.removeAttribute("data-error-visible");
+    radioCities.valid = true
+    console.log(radioCities[i].value)
   }
 };
 
 //Conditions Check
-  var firstCheckbox = document.querySelector('input[name="checkbox1]');
-  if (!firstCheckbox.checked) {
+  if (!conditionCheck.checked) {
     conditionDiv.setAttribute("data-error", conditionCheckMessage);
     conditionDiv.setAttribute("data-error-visible", true);
+    conditionCheck.valid = false
   } else {
     conditionDiv.removeAttribute("data-error");
     conditionDiv.removeAttribute("data-error-visible");
+    conditionCheck.valid = true
+    console.log(conditionCheck.value)
   };
+
+ //Mail Check 
+  if (newsletterCheck.checked) {
+    console.log(newsletterCheck.value)
+  }
 });
+
+//Clear
+function clearField (element) {
+    element.valid = false;
+    element.value = '';
+  };
+
+//Validation
+function formValid () {
+  
+  if(firstName.valid === true && lastName.valid === true && email.valid === true && birthdate.valid === true && quantity.valid === true && radioCities.valid === true && conditionCheck.valid === true) {
+    closeModal;
+    modalSuccess.style.display="block";
+    clearField(firstName);
+    clearField(lastName);
+    clearField(email);
+    clearField(birthdate);
+    clearField(quantity);
+    clearField(radioCities)
+    clearField(conditionCheck)
+    clearField(newsletterCheck)
+    }
+};
