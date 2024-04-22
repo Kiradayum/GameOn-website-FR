@@ -68,24 +68,18 @@ function closeModal() {
   modalbg.style.display = "none";
 };
 
-//Form Check
-
-//Names   --/^[a-zA-Z]{2,}$/--
+//Form Check functions
 function checkName(name) {
   const regex = /^[a-zA-Z]{2,}$/;
   return regex.test(name);
 };
 
-//E-mail --/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/--
 function checkMail(name) {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
   return regex.test(name);
 };
 
-reserveForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-//Prénom 
+function validateFirstName () {
   if (!checkName(firstName.value)) {
     firstNameDiv.setAttribute("data-error", firstNameMessage);
     firstNameDiv.setAttribute("data-error-visible", true);
@@ -94,10 +88,10 @@ reserveForm.addEventListener("submit", function (event) {
     firstNameDiv.removeAttribute("data-error");
     firstNameDiv.removeAttribute("data-error-visible");
     firstName.valid = true
-    console.log(firstName.value)
-  };
+  }
+};
 
-//Nom
+function validateLastName () {
   if (!checkName(lastName.value)) {
     lastNameDiv.setAttribute("data-error", lastNameMessage);
     lastNameDiv.setAttribute("data-error-visible", true);
@@ -106,10 +100,10 @@ reserveForm.addEventListener("submit", function (event) {
     lastNameDiv.removeAttribute("data-error");
     lastNameDiv.removeAttribute("data-error-visible");
     lastName.valid = true
-    console.log(lastName.value)
-  };
+  }
+};
 
-//E-mail
+function validateEmail () {
   if (!checkMail(email.value)) {
     emailDiv.setAttribute("data-error", emailMessage);
     emailDiv.setAttribute("data-error-visible", true);
@@ -118,10 +112,10 @@ reserveForm.addEventListener("submit", function (event) {
     emailDiv.removeAttribute("data-error");
     emailDiv.removeAttribute("data-error-visible");
     email.valid = true
-    console.log(email.value)
-  };
+  }
+};
 
-//Birthdate
+function validateBirthdate () {
   if (birthdate.value === "") {
     birthdateDiv.setAttribute("data-error", birthdateMessage);
     birthdateDiv.setAttribute("data-error-visible", true);
@@ -130,10 +124,10 @@ reserveForm.addEventListener("submit", function (event) {
     birthdateDiv.removeAttribute("data-error");
     birthdateDiv.removeAttribute("data-error-visible");
     birthdate.valid = true
-    console.log(birthdate.value)
-  };
+  }
+};
 
-//Quantity 
+function validateQuantity () {
   if (quantity.value === "") {
     quantityDiv.setAttribute("data-error", quantityMessage);
     quantityDiv.setAttribute("data-error-visible", true);
@@ -142,16 +136,18 @@ reserveForm.addEventListener("submit", function (event) {
     quantityDiv.removeAttribute("data-error");
     quantityDiv.removeAttribute("data-error-visible");
     quantity.valid = true
-    console.log(quantity.value)
-  };
+  }
+};
 
-//Cities Radio 
+function validateCities () {
   var isChecked = false;
   for (var i = 0; i < radioCities.length; i++) {
     if (radioCities[i].checked) {
         isChecked = true;
-        break; // A revoir !
+        City = radioCities[i]
+        break;
     }
+  }
   if (!isChecked) {
     radioCitiesDiv.setAttribute("data-error", radioCitiesMessage);
     radioCitiesDiv.setAttribute("data-error-visible", true);
@@ -160,11 +156,11 @@ reserveForm.addEventListener("submit", function (event) {
     radioCitiesDiv.removeAttribute("data-error");
     radioCitiesDiv.removeAttribute("data-error-visible");
     radioCities.valid = true
-    console.log(radioCities[i].value)
   }
 };
 
-//Conditions Check
+
+function validateConditions () {
   if (!conditionCheck.checked) {
     conditionDiv.setAttribute("data-error", conditionCheckMessage);
     conditionDiv.setAttribute("data-error-visible", true);
@@ -173,34 +169,49 @@ reserveForm.addEventListener("submit", function (event) {
     conditionDiv.removeAttribute("data-error");
     conditionDiv.removeAttribute("data-error-visible");
     conditionCheck.valid = true
-    console.log(conditionCheck.value)
-  };
+  }
+};
 
- //Mail Check 
+//Validation process
+
+function clearField (element) {
+  element.valid = false;
+  element.value = '';
+};
+
+function formValidation () {
+if(firstName.valid === true && lastName.valid === true && email.valid === true && birthdate.valid === true && quantity.valid === true && radioCities.valid === true && conditionCheck.valid === true) {
+  closeModal();
+  modalSuccess.style.display="block";
+  clearField(firstName);
+  clearField(lastName);
+  clearField(email);
+  clearField(birthdate);
+  clearField(quantity);
+  clearField(radioCities)
+  clearField(conditionCheck)
+  clearField(newsletterCheck)
+  }
+};
+
+reserveForm.addEventListener("submit", function (event) {
+  event.preventDefault()
+  validateFirstName()
+  validateLastName()
+  validateEmail()
+  validateBirthdate()
+  validateQuantity()
+  validateCities()
+  validateConditions()
+  console.log(firstName.value)
+  console.log(lastName.value)
+  console.log(email.value)
+  console.log(birthdate.value)
+  console.log(quantity.value)
+  console.log(City.value)
+  console.log(conditionCheck.value)
   if (newsletterCheck.checked) {
     console.log(newsletterCheck.value)
   }
+  formValidation()
 });
-
-//Clear
-function clearField (element) {
-    element.valid = false;
-    element.value = '';
-  };
-
-//Validation
-function formValid () {
-  
-  if(firstName.valid === true && lastName.valid === true && email.valid === true && birthdate.valid === true && quantity.valid === true && radioCities.valid === true && conditionCheck.valid === true) {
-    closeModal;
-    modalSuccess.style.display="block";
-    clearField(firstName);
-    clearField(lastName);
-    clearField(email);
-    clearField(birthdate);
-    clearField(quantity);
-    clearField(radioCities)
-    clearField(conditionCheck)
-    clearField(newsletterCheck)
-    }
-};
