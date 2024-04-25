@@ -12,7 +12,7 @@ const modalbg = document.querySelector(".bground"); //Modal
 const modalBtn = document.querySelectorAll(".modal-btn"); //Open Modal Btn
 const formData = document.querySelector(".formData"); //All form by class
 const submitBtn = document.querySelector(".btn-submit")//Btn to submit
-const closeBtn = document.querySelector(".close")//X Btn to close
+const closeBtns = document.querySelectorAll(".close")//X Btn to close
 const firstName = document.getElementById("first")//Prénom
 const lastName = document.getElementById("last")//Nom
 const email = document.getElementById("email")//E-mail
@@ -22,7 +22,7 @@ const radioCities = document.querySelectorAll(".checkbox-input");//A quel tourno
 const conditionCheck = document.getElementById("checkbox1")//Conditions d'utilisation
 const newsletterCheck = document.getElementById("checkbox2")//Newsletter
 const reserveForm = document.getElementById("reserve-form")//Formulaire Complet
-const modalSuccess = document.getElementById("closemodal")// ---A integrer au html---
+const modalSuccess = document.querySelector(".modalsucces")//Message de validation après verification
 
 //Messages
 const firstNameMessage = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
@@ -61,11 +61,14 @@ function launchModal() {
 };
 
 // close modal event
-closeBtn.addEventListener("click", closeModal);
+closeBtns.forEach(closeBtn => {
+  closeBtn.addEventListener("click", closeModal)
+});
 
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  modalSuccess.style.display = "none";
 };
 
 //Form Check functions
@@ -159,7 +162,6 @@ function validateCities () {
   }
 };
 
-
 function validateConditions () {
   if (!conditionCheck.checked) {
     conditionDiv.setAttribute("data-error", conditionCheckMessage);
@@ -188,9 +190,9 @@ if(firstName.valid === true && lastName.valid === true && email.valid === true &
   clearField(email);
   clearField(birthdate);
   clearField(quantity);
-  clearField(radioCities)
-  clearField(conditionCheck)
-  clearField(newsletterCheck)
+  clearField(radioCities)//Trouver une autre solution pour clear les radios et checkbox.
+  clearField(conditionCheck)//""""""""""""""""""
+  clearField(newsletterCheck)//""""""""""""""""""
   }
 };
 

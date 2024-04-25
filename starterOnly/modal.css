@@ -157,7 +157,7 @@ main {
   font-size: 16px;
 }
 
-.bground {
+.bground, .modalsucces {
   display: none;
   position: fixed;
   z-index: 1;
@@ -186,6 +186,10 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
+}
+
+.content-centered {
+  padding: 50px 25px 50px 25px;
 }
 
 label {
