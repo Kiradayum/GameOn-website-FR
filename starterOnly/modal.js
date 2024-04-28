@@ -86,11 +86,11 @@ function validateFirstName () {
   if (!checkName(firstName.value)) {
     firstNameDiv.setAttribute("data-error", firstNameMessage);
     firstNameDiv.setAttribute("data-error-visible", true);
-    firstName.valid = false
+    firstName.valid = false;
   } else {
     firstNameDiv.removeAttribute("data-error");
     firstNameDiv.removeAttribute("data-error-visible");
-    firstName.valid = true
+    firstName.valid = true;
   }
 };
 
@@ -98,11 +98,11 @@ function validateLastName () {
   if (!checkName(lastName.value)) {
     lastNameDiv.setAttribute("data-error", lastNameMessage);
     lastNameDiv.setAttribute("data-error-visible", true);
-    lastName.valid = false
+    lastName.valid = false;
   } else {
     lastNameDiv.removeAttribute("data-error");
     lastNameDiv.removeAttribute("data-error-visible");
-    lastName.valid = true
+    lastName.valid = true;
   }
 };
 
@@ -110,11 +110,11 @@ function validateEmail () {
   if (!checkMail(email.value)) {
     emailDiv.setAttribute("data-error", emailMessage);
     emailDiv.setAttribute("data-error-visible", true);
-    email.valid = false
+    email.valid = false;
   } else {
     emailDiv.removeAttribute("data-error");
     emailDiv.removeAttribute("data-error-visible");
-    email.valid = true
+    email.valid = true;
   }
 };
 
@@ -122,11 +122,11 @@ function validateBirthdate () {
   if (birthdate.value === "") {
     birthdateDiv.setAttribute("data-error", birthdateMessage);
     birthdateDiv.setAttribute("data-error-visible", true);
-    birthdate.valid = false
+    birthdate.valid = false;
   } else {
     birthdateDiv.removeAttribute("data-error");
     birthdateDiv.removeAttribute("data-error-visible");
-    birthdate.valid = true
+    birthdate.valid = true;
   }
 };
 
@@ -134,11 +134,11 @@ function validateQuantity () {
   if (quantity.value === "") {
     quantityDiv.setAttribute("data-error", quantityMessage);
     quantityDiv.setAttribute("data-error-visible", true);
-    quantity.valid = false
+    quantity.valid = false;
   } else {
     quantityDiv.removeAttribute("data-error");
     quantityDiv.removeAttribute("data-error-visible");
-    quantity.valid = true
+    quantity.valid = true;
   }
 };
 
@@ -147,18 +147,18 @@ function validateCities () {
   for (var i = 0; i < radioCities.length; i++) {
     if (radioCities[i].checked) {
         isChecked = true;
-        City = radioCities[i]
+        City = radioCities[i];
         break;
     }
   }
   if (!isChecked) {
     radioCitiesDiv.setAttribute("data-error", radioCitiesMessage);
     radioCitiesDiv.setAttribute("data-error-visible", true);
-    radioCities.valid = false
+    radioCities.valid = false;
   } else {
     radioCitiesDiv.removeAttribute("data-error");
     radioCitiesDiv.removeAttribute("data-error-visible");
-    radioCities.valid = true
+    radioCities.valid = true;
   }
 };
 
@@ -166,11 +166,11 @@ function validateConditions () {
   if (!conditionCheck.checked) {
     conditionDiv.setAttribute("data-error", conditionCheckMessage);
     conditionDiv.setAttribute("data-error-visible", true);
-    conditionCheck.valid = false
+    conditionCheck.valid = false;
   } else {
     conditionDiv.removeAttribute("data-error");
     conditionDiv.removeAttribute("data-error-visible");
-    conditionCheck.valid = true
+    conditionCheck.valid = true;
   }
 };
 
@@ -179,6 +179,7 @@ function validateConditions () {
 function clearField (element) {
   element.valid = false;
   element.value = '';
+  element.checked = false;
 };
 
 function formValidation () {
@@ -190,30 +191,30 @@ if(firstName.valid === true && lastName.valid === true && email.valid === true &
   clearField(email);
   clearField(birthdate);
   clearField(quantity);
-  clearField(radioCities)//Trouver une autre solution pour clear les radios et checkbox.
-  clearField(conditionCheck)//""""""""""""""""""
-  clearField(newsletterCheck)//""""""""""""""""""
+  clearField(City);
+  clearField(conditionCheck);
+  clearField(newsletterCheck);
   }
 };
 
 reserveForm.addEventListener("submit", function (event) {
-  event.preventDefault()
-  validateFirstName()
-  validateLastName()
-  validateEmail()
-  validateBirthdate()
-  validateQuantity()
-  validateCities()
-  validateConditions()
-  console.log(firstName.value)
-  console.log(lastName.value)
-  console.log(email.value)
-  console.log(birthdate.value)
-  console.log(quantity.value)
-  console.log(City.value)
-  console.log(conditionCheck.value)
+  event.preventDefault();
+  validateFirstName();
+  validateLastName();
+  validateEmail();
+  validateBirthdate();
+  validateQuantity();
+  validateCities();
+  validateConditions();
+  console.log(firstName.value);
+  console.log(lastName.value);
+  console.log(email.value);
+  console.log(birthdate.value);
+  console.log(quantity.value);
+  console.log(City.value);
+  console.log(conditionCheck.value);
   if (newsletterCheck.checked) {
-    console.log(newsletterCheck.value)
+    console.log(newsletterCheck.value);
   }
-  formValidation()
+  formValidation();
 });
