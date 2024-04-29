@@ -42,6 +42,7 @@ const quantityDiv = document.querySelector(".quantity")
 const radioCitiesDiv = document.querySelector(".location")
 const conditionDiv = document.querySelector(".conditions")
 
+
 //Validation state
 firstName.valid = false
 lastName.valid = false
@@ -51,6 +52,7 @@ quantity.valid = false
 radioCities.valid = false
 conditionCheck.valid = false
 newsletterCheck.valid = false
+let city = null
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -82,64 +84,36 @@ function checkMail(name) {
   return regex.test(name);
 };
 
-function validateFirstName () {
-  if (!checkName(firstName.value)) {
-    firstNameDiv.setAttribute("data-error", firstNameMessage);
-    firstNameDiv.setAttribute("data-error-visible", true);
-    firstName.valid = false;
+function validateInput(checked, inputDiv, inputCheck, inputMessage) {
+  if (!checked) {
+    inputDiv.setAttribute("data-error", inputMessage);
+    inputDiv.setAttribute("data-error-visible", true);
+    inputCheck.valid = false;
   } else {
-    firstNameDiv.removeAttribute("data-error");
-    firstNameDiv.removeAttribute("data-error-visible");
-    firstName.valid = true;
+    inputDiv.removeAttribute("data-error");
+    inputDiv.removeAttribute("data-error-visible");
+    inputCheck.valid = true;
   }
+}
+
+function validateFirstName () {
+  validateInput(checkName(firstName.value), firstNameDiv, firstName, firstNameMessage)
 };
 
 function validateLastName () {
-  if (!checkName(lastName.value)) {
-    lastNameDiv.setAttribute("data-error", lastNameMessage);
-    lastNameDiv.setAttribute("data-error-visible", true);
-    lastName.valid = false;
-  } else {
-    lastNameDiv.removeAttribute("data-error");
-    lastNameDiv.removeAttribute("data-error-visible");
-    lastName.valid = true;
-  }
+  validateInput(checkName(lastName.value), lastNameDiv, lastName, lastNameMessage)
 };
 
 function validateEmail () {
-  if (!checkMail(email.value)) {
-    emailDiv.setAttribute("data-error", emailMessage);
-    emailDiv.setAttribute("data-error-visible", true);
-    email.valid = false;
-  } else {
-    emailDiv.removeAttribute("data-error");
-    emailDiv.removeAttribute("data-error-visible");
-    email.valid = true;
-  }
+  validateInput(checkMail(email.value), emailDiv, email, emailMessage)
 };
 
 function validateBirthdate () {
-  if (birthdate.value === "") {
-    birthdateDiv.setAttribute("data-error", birthdateMessage);
-    birthdateDiv.setAttribute("data-error-visible", true);
-    birthdate.valid = false;
-  } else {
-    birthdateDiv.removeAttribute("data-error");
-    birthdateDiv.removeAttribute("data-error-visible");
-    birthdate.valid = true;
-  }
+  validateInput(birthdate.value, birthdateDiv, birthdate, birthdateMessage)
 };
 
 function validateQuantity () {
-  if (quantity.value === "") {
-    quantityDiv.setAttribute("data-error", quantityMessage);
-    quantityDiv.setAttribute("data-error-visible", true);
-    quantity.valid = false;
-  } else {
-    quantityDiv.removeAttribute("data-error");
-    quantityDiv.removeAttribute("data-error-visible");
-    quantity.valid = true;
-  }
+  validateInput(quantity.value, quantityDiv, quantity, quantityMessage)
 };
 
 function validateCities () {
@@ -147,31 +121,15 @@ function validateCities () {
   for (var i = 0; i < radioCities.length; i++) {
     if (radioCities[i].checked) {
         isChecked = true;
-        City = radioCities[i];
+        city = radioCities[i];
         break;
     }
   }
-  if (!isChecked) {
-    radioCitiesDiv.setAttribute("data-error", radioCitiesMessage);
-    radioCitiesDiv.setAttribute("data-error-visible", true);
-    radioCities.valid = false;
-  } else {
-    radioCitiesDiv.removeAttribute("data-error");
-    radioCitiesDiv.removeAttribute("data-error-visible");
-    radioCities.valid = true;
-  }
+  validateInput(isChecked, radioCitiesDiv, radioCities, radioCitiesMessage)
 };
 
 function validateConditions () {
-  if (!conditionCheck.checked) {
-    conditionDiv.setAttribute("data-error", conditionCheckMessage);
-    conditionDiv.setAttribute("data-error-visible", true);
-    conditionCheck.valid = false;
-  } else {
-    conditionDiv.removeAttribute("data-error");
-    conditionDiv.removeAttribute("data-error-visible");
-    conditionCheck.valid = true;
-  }
+  validateInput(conditionCheck.checked, conditionDiv, conditionCheck, conditionCheckMessage)
 };
 
 //Validation process
@@ -180,20 +138,30 @@ function clearField (element) {
   element.valid = false;
   element.value = '';
   element.checked = false;
+  isChecked = false;
 };
 
 function formValidation () {
 if(firstName.valid === true && lastName.valid === true && email.valid === true && birthdate.valid === true && quantity.valid === true && radioCities.valid === true && conditionCheck.valid === true) {
+  console.log('Prénom : ' + firstName.value);
+  console.log('Nom : ' + lastName.value);
+  console.log('E-mail : ' + email.value);
+  console.log('Date de naissance : ' + birthdate.value);
+  console.log('Nombre de participation : ' + quantity.value);
+  console.log('Ville : ' + city.value);
+  console.log('Conditions : ' + (conditionCheck.checked ? 'oui' : 'non'));
+  console.log('Newsletter : ' + (newsletterCheck.checked ? 'oui' : 'non'));
+/************-EmailJS-***************/
   closeModal();
-  modalSuccess.style.display="block";
   clearField(firstName);
   clearField(lastName);
   clearField(email);
   clearField(birthdate);
   clearField(quantity);
-  clearField(City);
+  clearField(city);
   clearField(conditionCheck);
   clearField(newsletterCheck);
+  modalSuccess.style.display="block";
   }
 };
 
@@ -206,15 +174,6 @@ reserveForm.addEventListener("submit", function (event) {
   validateQuantity();
   validateCities();
   validateConditions();
-  console.log(firstName.value);
-  console.log(lastName.value);
-  console.log(email.value);
-  console.log(birthdate.value);
-  console.log(quantity.value);
-  console.log(City.value);
-  console.log(conditionCheck.value);
-  if (newsletterCheck.checked) {
-    console.log(newsletterCheck.value);
-  }
   formValidation();
 });
+
