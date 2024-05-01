@@ -18,7 +18,7 @@ const lastName = document.getElementById("last")//Nom
 const email = document.getElementById("email")//E-mail
 const birthdate = document.getElementById("birthdate")//Date de naissance
 const quantity = document.getElementById("quantity")//À combien de tournois GameOn avez-vous déjà participé ?
-const radioCities = document.querySelectorAll(".checkbox-input");//A quel tournoi souhaitez-vous participer cette année ?
+const radioCities = document.querySelectorAll(".radio");//A quel tournoi souhaitez-vous participer cette année ?
 const conditionCheck = document.getElementById("checkbox1")//Conditions d'utilisation
 const newsletterCheck = document.getElementById("checkbox2")//Newsletter
 const reserveForm = document.getElementById("reserve-form")//Formulaire Complet
@@ -28,8 +28,8 @@ const modalSuccess = document.querySelector(".modalsucces")//Message de validati
 const firstNameMessage = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
 const lastNameMessage = "Veuillez entrer 2 caractères ou plus pour le champ du nom."
 const emailMessage = "Veuillez entrer une adresse mail valide."
-const birthdateMessage = "Vous devez entrer votre date de naissance."
-const quantityMessage = "Vous devez choisir une option."
+const birthdateMessage = "Veuillez entrer une date de naissance valide."
+const quantityMessage = "Veuillez entrer une valeur."
 const radioCitiesMessage = "Vous devez choisir une option."
 const conditionCheckMessage = "Vous devez vérifier que vous acceptez les termes et conditions."
 
@@ -109,7 +109,17 @@ function validateEmail () {
 };
 
 function validateBirthdate () {
-  validateInput(birthdate.value, birthdateDiv, birthdate, birthdateMessage)
+  var ofAge = false;
+  var birthDate = new Date(birthdate.value);
+  var today = new Date();
+  var age = today.getFullYear() - birthDate.getFullYear();
+  if (age > 12) {
+    var ofAge = true
+  }
+  else {
+    var ofAge = false
+  }
+  validateInput(ofAge, birthdateDiv, birthdate, birthdateMessage)
 };
 
 function validateQuantity () {
@@ -139,6 +149,7 @@ function clearField (element) {
   element.value = '';
   element.checked = false;
   isChecked = false;
+  ofAge = false
 };
 
 function formValidation () {
@@ -151,7 +162,6 @@ if(firstName.valid === true && lastName.valid === true && email.valid === true &
   console.log('Ville : ' + city.value);
   console.log('Conditions : ' + (conditionCheck.checked ? 'oui' : 'non'));
   console.log('Newsletter : ' + (newsletterCheck.checked ? 'oui' : 'non'));
-/************-EmailJS-***************/
   closeModal();
   clearField(firstName);
   clearField(lastName);
